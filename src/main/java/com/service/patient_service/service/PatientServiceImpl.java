@@ -5,6 +5,7 @@ import com.service.patient_service.dto.PatientResponse;
 import com.service.patient_service.entity.Patient;
 import com.service.patient_service.exception.ApiException;
 import com.service.patient_service.repository.PatientRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,8 +24,8 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    @Cacheable(value = "patients")
     @Override
+    @Cacheable(value = "patients")
     public List<PatientResponse> getPatients() {
         return patientRepository.findAllByDeletedAt(0L).stream().map(
                 data -> PatientResponse.builder()
@@ -38,8 +39,8 @@ public class PatientServiceImpl implements PatientService {
                         .build()).collect(Collectors.toList());
     }
 
-    @Cacheable(value = "patient", key = "#slug")
     @Override
+    @Cacheable(value = "patient", key = "#slug")
     public PatientResponse getPatientBySlug(String slug) {
 
         return patientRepository.findFirstBySlugAndDeletedAt(slug, 0L)
@@ -56,8 +57,9 @@ public class PatientServiceImpl implements PatientService {
                 .orElseThrow(() -> new ApiException("Patient Not Found", HttpStatus.NOT_FOUND));
     }
 
-    @CacheEvict(value = "patients", allEntries = true)
     @Override
+    @Transactional
+    @CacheEvict(value = "patients", allEntries = true)
     public PatientResponse addPatient(PatientRequest patientRequest) {
         Patient patient = new Patient();
         patient.setSlug(slugify(patientRequest.getName()));
@@ -84,11 +86,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional
     @Caching(evict = {
             @CacheEvict(value = "patients", key = "'all'"),
             @CacheEvict(value = "patientBySlug", key = "#slug")
     })
-    @CacheEvict(value = "patients", allEntries = true)
     public PatientResponse updatePatient(PatientRequest patientRequest, String slug) {
         Patient findPatient = patientRepository.findFirstBySlugAndDeletedAt(slug, 0L)
                 .orElseThrow(() -> new ApiException("Patient Not Found", HttpStatus.NOT_FOUND));
@@ -114,11 +116,12 @@ public class PatientServiceImpl implements PatientService {
                 .build();
     }
 
+    @Override
+    @Transactional
     @Caching(evict = {
             @CacheEvict(value = "patients", key = "'all'"),
             @CacheEvict(value = "patientBySlug", key = "#slug")
     })
-    @Override
     public String deletePatient(String slug) {
         Patient findPatient = patientRepository.findFirstBySlugAndDeletedAt(slug, 0L)
                 .orElseThrow(() -> new ApiException("Slug Not Found", HttpStatus.NOT_FOUND));
