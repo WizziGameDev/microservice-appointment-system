@@ -13,6 +13,8 @@
 ## 🔜 Upcomming
 
 - 🔐 **Updating project with Spring Security and Spring Cloud Security**
+  
+---
 
 ## 📥 Endpoint
 
@@ -96,3 +98,51 @@ Status Code: 404 Not Found
     ]
 }
 ```
+---
+
+## 📥 Endpoint
+
+### 🔹 GET /api/v1/doctor/{slug}
+
+#### 📝 Description
+
+Retrieve doctor data based on unique slug.
+
+#### 📌 Example Endpoint
+
+GET localhost:8086/api/v1/doctor/dr-john-doe
+
+#### ✅ Success Response
+
+Status Code: 200 OK
+
+```json
+{
+  "statusCode": 200,
+  "data": {
+    "slug": "dr-john-doe",
+    "name": "Dr. John Doe",
+    "email": "dr.johndoe@example.com",
+    "phoneNumber": 1234567890,
+    "address": "123 Main St, Anytown, USA",
+    "gender": "Male",
+    "birthDate": 950745600000,
+    "licenseNumber": "LIC1234567890",
+    "experienceYears": 10,
+    "specialization": "General Practitioner",
+    "availabilities": [
+      {
+        "dayOfWeek": "Monday",
+        "startTime": 1682047792000,
+        "endTime": 1682051392000
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "startTime": 1682134192000,
+        "endTime": 1682137792000
+      }
+    ]
+  },
+  "errors": null
+}
+
