@@ -5,7 +5,7 @@
 
 - **☕ Language & Framework**: Java (Spring Boot)
 - **🗄️ Database**: PostgreSQL
-- **⚡ Caching**: Redis is used to store cached responses from GET /api/patients to improve data retrieval speed.
+- **⚡ Caching**: Redis is used to store cached responses from GET /api/v1/patients and /api/v1/patient/{slug} to improve data retrieval speed.
 - **✅ Validation**: Field-level validation is implemented to ensure data integrity during both creation and updates.
 - **⚡ Concurrency**: Supports Virtual Threads to enhance performance and efficiency in handling concurrent requests.
 
