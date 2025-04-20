@@ -77,6 +77,8 @@ Status Code: 200 OK
 
 ---
 
+## 📥 Endpoint
+
 ### 🔹 GET /api/v1/patient/{slug}
 
 #### 📝 Description
