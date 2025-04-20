@@ -1,0 +1,1 @@
+ALTER TABLE availabilitys ADD COLUMN deleted_at BIGINT;
