@@ -91,7 +91,7 @@ public class PatientServiceImpl implements PatientService {
     @CacheEvict(value = "patients", allEntries = true)
     public PatientResponse updatePatient(PatientRequest patientRequest, String slug) {
         Patient findPatient = patientRepository.findFirstBySlugAndDeletedAt(slug, 0L)
-                .orElseThrow(() -> new ApiException("Slug Not Found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiException("Patient Not Found", HttpStatus.NOT_FOUND));
 
         findPatient.setSlug(slugify(patientRequest.getName()));
         findPatient.setName(patientRequest.getName());

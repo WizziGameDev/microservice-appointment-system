@@ -5,6 +5,8 @@ import com.service.patient_service.dto.PatientResponse;
 import com.service.patient_service.dto.WebResponse;
 import com.service.patient_service.service.PatientServiceImpl;
 import jakarta.validation.Valid;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ public class PatientController {
     @Autowired
     private PatientServiceImpl patientServiceImpl;
 
+    @SneakyThrows
     @GetMapping(value = "/patients",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -32,15 +35,10 @@ public class PatientController {
                     .data(future.get())
                     .errors(null)
                     .build();
-        } catch (Exception e) {
-            return WebResponse.<List<PatientResponse>>builder()
-                    .statusCode(500)
-                    .data(null)
-                    .errors(List.of(e.getMessage()))
-                    .build();
         }
     }
 
+    @SneakyThrows
     @GetMapping(value = "/patient/{slug}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -53,15 +51,10 @@ public class PatientController {
                     .data(future.get())
                     .errors(null)
                     .build();
-        } catch (Exception e) {
-            return WebResponse.<PatientResponse>builder()
-                    .statusCode(500)
-                    .data(null)
-                    .errors(List.of(e.getMessage()))
-                    .build();
         }
     }
 
+    @SneakyThrows
     @PostMapping(value = "/patient",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -75,15 +68,10 @@ public class PatientController {
                     .data(future.get())
                     .errors(null)
                     .build();
-        } catch (Exception e) {
-            return WebResponse.<PatientResponse>builder()
-                    .statusCode(500)
-                    .data(null)
-                    .errors(List.of(e.getMessage()))
-                    .build();
         }
     }
 
+    @SneakyThrows
     @PutMapping(value = "/patient/{slug}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -97,15 +85,10 @@ public class PatientController {
                     .data(future.get())
                     .errors(null)
                     .build();
-        } catch (Exception e) {
-            return WebResponse.<PatientResponse>builder()
-                    .statusCode(500)
-                    .data(null)
-                    .errors(List.of(e.getMessage()))
-                    .build();
         }
     }
 
+    @SneakyThrows
     @DeleteMapping(value = "/patient/{slug}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -117,12 +100,6 @@ public class PatientController {
                     .statusCode(200)
                     .data(future.get())
                     .errors(null)
-                    .build();
-        } catch (Exception e) {
-            return WebResponse.<String>builder()
-                    .statusCode(500)
-                    .data(null)
-                    .errors(List.of(e.getMessage()))
                     .build();
         }
     }
