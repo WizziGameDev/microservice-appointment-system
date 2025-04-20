@@ -145,4 +145,262 @@ Status Code: 200 OK
   },
   "errors": null
 }
+```
+
+#### ❌ Error Response
+
+Status Code: 404 Not Found
+
+```json
+{
+    "statusCode": 404,
+    "data": null,
+    "errors": [
+        "Doctor Not Found"
+    ]
+}
+```
+---
+
+# Validation Rules for DoctorRequest and AvailabilityRequest
+
+## DoctorRequest Validation Rules
+
+- **name**: 
+  - Must be between **2 and 100 characters**.
+  - Cannot be **empty**.
+
+- **email**: 
+  - Must be a **valid email address**.
+  - Cannot be **empty**.
+
+- **phoneNumber**:
+  - Must be **numeric** (maximum of **15 digits**).
+  - Cannot be **null**.
+
+- **address**:
+  - Cannot be **empty**.
+
+- **gender**: 
+  - Must be one of the following: **Male**, **Female**, or **Other**.
+  - Cannot be **empty**.
+
+- **birthDate**: 
+  - Must be a valid **timestamp** (Unix format).
+  - Cannot be **null**.
+
+- **licenseNumber**:
+  - Cannot be **empty**.
+
+- **experienceYears**:
+  - Must be at least **0 years**.
+  - Cannot be **null**.
+
+- **specialization**:
+  - Cannot be **empty**.
+
+- **availabilities**: 
+  - Must be a **non-empty list**.
+  - Each entry must follow the `AvailabilityRequest` structure (defined below).
+
+---
+
+## AvailabilityRequest Validation Rules
+
+- **dayOfWeek**: 
+  - Must be one of the following valid days: **Monday**, **Tuesday**, **Wednesday**, **Thursday**, **Friday**, **Saturday**, or **Sunday**.
+  - Cannot be **empty**.
+
+- **startTime**: 
+  - Must be a **positive timestamp** (Unix format).
+  - Cannot be **null**.
+
+- **endTime**: 
+  - Must be a **positive timestamp** (Unix format).
+  - Cannot be **null**.
+
+---
+
+## 📥 Endpoint
+
+## 🔹 POST /api/v1/doctor
+
+### 📝 Description
+
+Create a new doctor entry with the provided details.
+
+### 📌 Example Request
+
+POST localhost:8086/api/v1/doctor
+
+**Request Body:**
+
+```json
+{
+  "name": "Dr. Sarah Johnson",
+  "email": "sarah.johnson@example.com",
+  "phoneNumber": 6281234567890,
+  "address": "Jl. Sehat No. 123, Jakarta",
+  "gender": "Female",
+  "birthDate": 631152000000,
+  "licenseNumber": "LIC-2024-0001",
+  "experienceYears": 5,
+  "specialization": "Cardiology",
+  "availabilities": [
+    {
+      "dayOfWeek": "Monday",
+      "startTime": 1716890400000,
+      "endTime": 1716897600000
+    },
+    {
+      "dayOfWeek": "Wednesday",
+      "startTime": 1717063200000,
+      "endTime": 1717070400000
+    }
+  ]
+}
+```
+
+### ✅ Success Response
+
+Status Code: 200 OK
+
+```json
+{
+  "statusCode": 200,
+  "data": {
+    "slug": "dr-sarah-johnson-9595",
+    "name": "Dr. Sarah Johnson",
+    "email": "sarah.johnson@example.com",
+    "phoneNumber": 6281234567890,
+    "address": "Jl. Sehat No. 123, Jakarta",
+    "gender": "Female",
+    "birthDate": 631152000000,
+    "licenseNumber": "LIC-2024-0001",
+    "experienceYears": 5,
+    "specialization": "Cardiology",
+    "availabilities": [
+      {
+        "dayOfWeek": "Monday",
+        "startTime": 1716890400000,
+        "endTime": 1716897600000
+      },
+      {
+        "dayOfWeek": "Wednesday",
+        "startTime": 1717063200000,
+        "endTime": 1717070400000
+      }
+    ]
+  },
+  "errors": null
+}
+```
+
+### ❌ Error Response
+
+Status Code: 400 Bad Request
+
+```json
+{
+  "statusCode": 400,
+  "data": null,
+  "errors": [
+    "Invalid input data"
+  ]
+}
+```
+---
+
+## 📥 Endpoint
+
+## 🔹 PUT /api/v1/doctor/{slug}
+
+### 📝 Description
+
+Update an existing doctor's details using their unique slug identifier.
+
+### 📌 Example Request
+
+PUT localhost:8086/api/v1/doctor/dr-sarah-johnson-9595
+
+**Request Body:**
+
+```json
+{
+  "name": "Dr. Sarah",
+  "email": "sarah.johnson@example.com",
+  "phoneNumber": 6281234567890,
+  "address": "Jl. Sehat No. 123, Jakarta",
+  "gender": "Female",
+  "birthDate": 631152000000,
+  "licenseNumber": "LIC-2024-0001",
+  "experienceYears": 5,
+  "specialization": "Cardiology",
+  "availabilities": [
+    {
+      "dayOfWeek": "Monday",
+      "startTime": 1716890400000,
+      "endTime": 1716897600000
+    },
+    {
+      "dayOfWeek": "Wednesday",
+      "startTime": 1717063200000,
+      "endTime": 1717070400000
+    }
+  ]
+}
+```
+
+### ✅ Success Response
+
+Status Code: 200 OK
+
+```json
+{
+    "statusCode": 200,
+    "data": {
+        "slug": "dr-sarah-1239",
+        "name": "Dr. Sarah",
+        "email": "sarah.johnson@example.com",
+        "phoneNumber": 6281234567890,
+        "address": "Jl. Sehat No. 123, Jakarta",
+        "gender": "Female",
+        "birthDate": 631152000000,
+        "licenseNumber": "LIC-2024-0001",
+        "experienceYears": 5,
+        "specialization": "Cardiology",
+        "availabilities": [
+            {
+                "dayOfWeek": "Monday",
+                "startTime": 1716890400000,
+                "endTime": 1716897600000
+            },
+            {
+                "dayOfWeek": "Wednesday",
+                "startTime": 1717063200000,
+                "endTime": 1717070400000
+            }
+        ]
+    },
+    "errors": null
+}
+```
+
+### ❌ Error Response
+
+Status Code: 400 Bad Request
+
+```json
+{
+  "statusCode": 400,
+  "data": null,
+  "errors": [
+    "Invalid input data"
+  ]
+}
+```
+---
+
+
+
 
