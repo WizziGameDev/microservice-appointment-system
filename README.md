@@ -1,5 +1,5 @@
 
-# 📄 API Documentation Patients
+# 📄 API Documentation Patient Service
 
 ## ⚙️ Technology and Configuration
 
