@@ -125,6 +125,8 @@ Status Code: 404 Not Found
 
 ---
 
+## 📥 Endpoint
+
 ### 🔹 POST /api/v1/patient
 
 #### 📝 Description
@@ -200,6 +202,8 @@ Status Code: 400 Bad Request
 
 ---
 
+## 📥 Endpoint
+
 ### 🔹 PUT /api/v1/patient/{slug}
 
 #### 📝 Description
@@ -256,6 +260,8 @@ Status Code: 404 Not Found
 ```
 
 ---
+
+## 📥 Endpoint
 
 ### 🔹 DELETE /api/v1/patient/{slug}
 
