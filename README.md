@@ -94,7 +94,7 @@ Status Code: 404 Not Found
     "statusCode": 404,
     "data": null,
     "errors": [
-        "Doctor Not Found"
+        "Doctors Not Found"
     ]
 }
 ```
