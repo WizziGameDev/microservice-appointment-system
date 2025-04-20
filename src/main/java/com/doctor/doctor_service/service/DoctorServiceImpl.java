@@ -31,6 +31,10 @@ public class DoctorServiceImpl implements DoctorService {
     public List<DoctorResponse> getDoctors() {
         List<Doctor> doctors = doctorRepository.findAllByDeletedAt(0L);
 
+        if (doctors.isEmpty()) {
+            throw new ApiException("Doctors Not Found", HttpStatus.NOT_FOUND);
+        }
+
         return doctors.stream().map(doctor -> DoctorResponse.builder()
                         .slug(doctor.getSlug())
                         .name(doctor.getName())

@@ -4,6 +4,7 @@ import com.doctor.doctor_service.dto.DoctorRequest;
 import com.doctor.doctor_service.dto.DoctorResponse;
 import com.doctor.doctor_service.dto.WebResponse;
 import com.doctor.doctor_service.service.DoctorService;
+import jakarta.validation.Valid;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -60,7 +61,7 @@ public class DoctorController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<DoctorResponse> addDoctor(@RequestBody DoctorRequest doctorRequest) {
+    public WebResponse<DoctorResponse> addDoctor(@Valid @RequestBody DoctorRequest doctorRequest) {
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             Future<DoctorResponse> future = executor.submit(() -> doctorService.addDoctor(doctorRequest));
 
@@ -78,7 +79,7 @@ public class DoctorController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<DoctorResponse> updateDoctor(@RequestBody DoctorRequest doctorRequest,
+    public WebResponse<DoctorResponse> updateDoctor(@Valid @RequestBody DoctorRequest doctorRequest,
                                                     @PathVariable(value = "slug") String slug) {
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             Future<DoctorResponse> future = executor.submit(() -> doctorService.updateDoctor(doctorRequest, slug));
