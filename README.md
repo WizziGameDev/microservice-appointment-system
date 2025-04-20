@@ -9,6 +9,10 @@
 - **✅ Validation**: Field-level validation is implemented to ensure data integrity during both creation and updates.
 - **⚡ Concurrency**: Supports Virtual Threads to enhance performance and efficiency in handling concurrent requests.
 
+## 🔜 Upcomming
+
+- 🔐 **Updating project with Spring Security and Spring Cloud Security**
+
 ## 📥 Endpoint
 
 ### 🔹 GET /api/patients
