@@ -5,7 +5,7 @@
 
 - **☕ Language & Framework**: Java (Spring Boot)
 - **🗄️ Database**: PostgreSQL (Database/Service)
-- **⚡ Caching**: Redis is used to store cached responses from GET /api/v1/doctors to improve data retrieval speed.
+- **⚡ Caching**: Redis is used to store cached responses from GET /api/v1/doctors and /api/v1/doctor/{slug} to improve data retrieval speed.
 - **✅ Validation**: Field-level validation is implemented to ensure data integrity during both creation and updates.
 - **⚡ Concurrency**: Supports Virtual Threads to enhance performance and efficiency in handling concurrent requests.
 - **🔄 Migration**: Using Flyway for database migration
@@ -221,6 +221,63 @@ Status Code: 404 Not Found
 
 ---
 
+## 📌 Example Request
+
+```json
+{
+  "name": "",
+  "email": "sarah",
+  "phoneNumber": "",
+  "address": "",
+  "gender": "Hide",
+  "birthDate": "",
+  "licenseNumber": "",
+  "experienceYears": "",
+  "specialization": "",
+  "availabilities": [
+    {
+      "dayOfWeek": "Pekan Arep",
+      "startTime": null,
+      "endTime": ""
+    },
+    {
+      "dayOfWeek": "Sesok Ae",
+      "startTime": "",
+      "endTime": null
+    }
+  ]
+}
+```
+
+### ❌ Error Response
+
+Status Code: 400 Bad Request
+
+```json
+{
+    "statusCode": 400,
+    "data": null,
+    "errors": {
+        "availabilities[0].startTime": "Start time is required",
+        "availabilities[0].endTime": "End time is required",
+        "address": "Address is required",
+        "gender": "Gender must be Male, Female, or Other",
+        "availabilities[1].dayOfWeek": "Day of week must be a valid day (e.g., Monday, Tuesday, etc.)",
+        "experienceYears": "Experience years is required",
+        "availabilities[1].startTime": "Start time is required",
+        "birthDate": "Birth date is required",
+        "phoneNumber": "Phone number is required",
+        "name": "Name is required",
+        "availabilities[0].dayOfWeek": "Day of week must be a valid day (e.g., Monday, Tuesday, etc.)",
+        "specialization": "Specialization is required",
+        "availabilities[1].endTime": "End time is required",
+        "licenseNumber": "License number is required",
+        "email": "Email should be valid"
+    }
+}
+```
+---
+
 ## 📥 Endpoint
 
 ## 🔹 POST /api/v1/doctor
@@ -293,20 +350,6 @@ Status Code: 200 OK
     ]
   },
   "errors": null
-}
-```
-
-### ❌ Error Response
-
-Status Code: 400 Bad Request
-
-```json
-{
-  "statusCode": 400,
-  "data": null,
-  "errors": [
-    "Invalid input data"
-  ]
 }
 ```
 ---
@@ -388,19 +431,54 @@ Status Code: 200 OK
 
 ### ❌ Error Response
 
-Status Code: 400 Bad Request
+Status Code: 404 Not Found
 
 ```json
 {
-  "statusCode": 400,
+  "statusCode": 404,
   "data": null,
   "errors": [
-    "Invalid input data"
+    "Doctor Not Found"
   ]
 }
 ```
 ---
 
+## 📥 Endpoint
 
+## 🔹 DELETE /api/v1/doctor/{slug}
 
+### 📝 Description
 
+Delete an existing doctor entry using their unique slug identifier.
+
+### 📌 Example Request
+
+DELETE localhost:8086/api/v1/doctor/dr-sarah-1239
+
+### ✅ Success Response
+
+Status Code: 200 OK
+
+```json
+{
+  "statusCode": 200,
+  "data": "Successfully deleted",
+  "errors": null
+}
+```
+
+### ❌ Error Response
+
+Status Code: 404 Not Found
+
+```json
+{
+  "statusCode": 404,
+  "data": null,
+  "errors": [
+    "Doctor Not Found"
+  ]
+}
+```
+---
