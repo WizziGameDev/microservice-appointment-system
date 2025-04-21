@@ -16,7 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -164,22 +166,24 @@ public class DoctorServiceImpl implements DoctorService {
 
         Long now = Instant.now().toEpochMilli();
 
-        resultDoctor.builder()
-                .name(doctorRequest.getName())
-                .email(doctorRequest.getEmail())
-                .phoneNumber(doctorRequest.getPhoneNumber())
-                .address(doctorRequest.getAddress())
-                .gender(doctorRequest.getGender())
-                .birthDate(doctorRequest.getBirthDate())
-                .licenseNumber(doctorRequest.getLicenseNumber())
-                .experienceYears(doctorRequest.getExperienceYears())
-                .specialization(doctorRequest.getSpecialization())
-                .slug(slugify(doctorRequest.getName()))
-                .createdAt(now)
-                .updatedAt(null)
-                .deletedAt(0L)
-                .build();
+        // Update field langsung tanpa builder
+        resultDoctor.setName(doctorRequest.getName());
+        resultDoctor.setEmail(doctorRequest.getEmail());
+        resultDoctor.setPhoneNumber(doctorRequest.getPhoneNumber());
+        resultDoctor.setAddress(doctorRequest.getAddress());
+        resultDoctor.setGender(doctorRequest.getGender());
+        resultDoctor.setBirthDate(doctorRequest.getBirthDate());
+        resultDoctor.setLicenseNumber(doctorRequest.getLicenseNumber());
+        resultDoctor.setExperienceYears(doctorRequest.getExperienceYears());
+        resultDoctor.setSpecialization(doctorRequest.getSpecialization());
+        resultDoctor.setSlug(slugify(doctorRequest.getName()));
+        resultDoctor.setUpdatedAt(now);
+        resultDoctor.setDeletedAt(0L);
 
+        // Hapus availabilities lama
+        resultDoctor.getAvailabilities().clear();
+
+        // Tambahkan availabilities baru
         List<Availability> availabilities = doctorRequest.getAvailabilities().stream()
                 .map(req -> Availability.builder()
                         .dayOfWeek(req.getDayOfWeek())
@@ -192,11 +196,11 @@ public class DoctorServiceImpl implements DoctorService {
                         .build())
                 .collect(Collectors.toList());
 
-        resultDoctor.setAvailabilities(availabilities);
+        resultDoctor.getAvailabilities().addAll(availabilities);
 
         Doctor updateDoctor = doctorRepository.save(resultDoctor);
 
-        // Mapping ke DoctorResponse
+        // Mapping ke response
         List<AvailabilityResponse> availabilityResponses = updateDoctor.getAvailabilities().stream()
                 .map(a -> AvailabilityResponse.builder()
                         .dayOfWeek(a.getDayOfWeek())

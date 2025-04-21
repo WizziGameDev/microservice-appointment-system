@@ -52,6 +52,6 @@ public class Doctor {
     @Column(name = "deleted_at")
     private Long deletedAt;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Availability> availabilities;
 }
