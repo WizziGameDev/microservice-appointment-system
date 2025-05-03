@@ -17,6 +17,9 @@ Proyek ini merupakan implementasi arsitektur **microservices** menggunakan **Spr
       Redis                  Redis                      Redis
         |                      |                          |
       MySQL                  MySQL                      MySQL
+
+PORT EUREKA
+http://localhost:8084/eureka
 ```
 
 ---
@@ -30,13 +33,13 @@ Proyek ini merupakan implementasi arsitektur **microservices** menggunakan **Spr
 - Fungsi: Menyimpan dan mengelola data pasien.
 
 ### 🔹 2. **Doctor Service**
-- 📍 Port: `8082`
+- 📍 Port: `8086`
 - 🗄 Database: `MySQL` (db_service_doctor)
 - ⚡ Cache: `Redis` (redis_doctor)
 - Fungsi: Menyimpan data dokter dan jadwal ketersediaan.
 
 ### 🔹 3. **Appointment Service**
-- 📍 Port: `8083`
+- 📍 Port: `8090`
 - 🗄 Database: `MySQL` (db_service_appointments)
 - ⚡ Cache: `Redis` (redis_appointments)
 - Fungsi: Mengelola janji temu antara pasien dan dokter.
