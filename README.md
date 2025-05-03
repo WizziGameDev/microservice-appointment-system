@@ -14,9 +14,9 @@ Proyek ini merupakan implementasi arsitektur **microservices** menggunakan **Spr
 +-------------+         +--------------+         +-------------------+
         |                      |                          |
         v                      v                          v
-     Redis                Redis                       Redis
+      Redis                  Redis                      Redis
         |                      |                          |
-     MySQL                 MySQL                      MySQL
+      MySQL                  MySQL                      MySQL
 ```
 
 ---
